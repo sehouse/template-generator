@@ -14,21 +14,44 @@ const questionsManager = [
     {
         type: 'input',
         name: 'managerName',
-        message: 'Please input the first and last name of the Manager.'
+        message: 'Please input the first and last name of the Manager:'
     },
     {
         type: 'input',
         name: 'managerIdNumber',
-        message: 'Please input the employee ID number of the Manager.'
+        message: 'Please input the employee ID number of the Manager:'
     },
     {
         type: 'input',
         name: 'managerEmailAddress',
-        message: 'Please input the company email address of the Manager.'
+        message: 'Please input the company email address of the Manager:'
     },
     {
         type: 'input',
         name: 'managerOfficeNumber',
-        message: 'Please input the office number of the Manager.'
+        message: 'Please input the office number of the Manager:'
     }
-]
+];
+
+const questionsEngineer = [
+    {
+        type: 'input',
+        name: 'engineerName',
+        message: 'Please input the first and last name of the Engineer:'
+    },
+    {
+        type: 'input',
+        name: 'engineerIdNumber',
+        message: 'Please input the employee ID number of the Engineer:'
+    },
+    {
+        type: 'input',
+        name: 'engineerEmailAddress',
+        message: 'Please input the company email address of the Engineer:'
+    },
+    {
+        type: 'input',
+        name: 'engineerGithubUsername',
+        message: 'Please input the GitHub username of the Engineer:'
+    }
+];
