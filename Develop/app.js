@@ -23,7 +23,7 @@ const questionsStart = [
 
 const questionsContinue = [
     {
-        type: `list`,
+        type: `confirm`,
         name: `confirm`,
         message: `Would you like to input another employee's information?`
     }
@@ -98,3 +98,79 @@ const questionsIntern = [
     }
 ];
 
+const init = async () => {
+    addEmployee();
+}
+
+const addEmployee = async () => {
+    await inquirer
+        .prompt(questionsStart)
+        .then(async (response) => {
+            if (response.employeePosition === `Manager`) {
+                addManager();
+            } else if (response.employeePosition === `Engineer`) {
+                addEngineer();
+
+            } else if (response.employeePosition === `Intern`) {
+                addIntern();
+            };
+        });
+   
+};
+
+const addAnother = async () => {
+    await inquirer
+        .prompt(questionsContinue)
+        .then(async (response) => {
+            if (response.confirm === true) {
+                addEmployee();
+            };
+        });
+};
+
+const addManager = async () => {
+    await inquirer
+        .prompt(questionsManager)
+        .then(async (response) => {
+            const employeeManager = new Manager(
+                response.managerName,
+                response.managerIdNumber,
+                response.managerEmailAddress,
+                response.managerOfficeNumber
+            );
+            employeeList.push(employeeManager);
+        });
+    addAnother();
+}
+
+const addEngineer = async () => {
+    await inquirer
+        .prompt(questionsEngineer)
+        .then(async (response) => {
+            const employeeEngineer = new Engineer(
+                response.engineerName,
+                response.engineerIdNumber,
+                response.engineerEmailAddress,
+                response.engineerOfficeNumber
+            );
+            employeeList.push(employeeEngineer);
+        });
+    addAnother();
+};
+
+const addIntern = async () => {
+    await inquirer
+        .prompt(questionsIntern)
+        .then(async (response) => {
+            const employeeIntern = new Intern(
+                response.internName,
+                response.internIdNumber,
+                response.internEmailAddress,
+                response.internOfficeNumber
+            );
+            employeeList.push(employeeIntern);
+        });
+    addAnother();
+};
+
+init();
