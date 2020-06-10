@@ -10,7 +10,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const employeeList = [];
+
 
 const questionsStart = [
     {
@@ -32,22 +32,22 @@ const questionsContinue = [
 const questionsManager = [
     {
         type: `input`,
-        name: `managerName`,
+        name: `name`,
         message: `Please input the first and last name of the Manager:`
     },
     {
         type: `input`,
-        name: `managerIdNumber`,
+        name: `id`,
         message: `Please input the employee ID number of the Manager:`
     },
     {
         type: `input`,
-        name: `managerEmailAddress`,
+        name: `email`,
         message: `Please input the company email address of the Manager:`
     },
     {
         type: `input`,
-        name: `managerOfficeNumber`,
+        name: `officeNumber`,
         message: `Please input the office number of the Manager:`
     }
 ];
@@ -55,22 +55,22 @@ const questionsManager = [
 const questionsEngineer = [
     {
         type: `input`,
-        name: `engineerName`,
+        name: `name`,
         message: `Please input the first and last name of the Engineer:`
     },
     {
         type: `input`,
-        name: `engineerIdNumber`,
+        name: `id`,
         message: `Please input the employee ID number of the Engineer:`
     },
     {
         type: `input`,
-        name: `engineerEmailAddress`,
+        name: `email`,
         message: `Please input the company email address of the Engineer:`
     },
     {
         type: `input`,
-        name: `engineerGithubUsername`,
+        name: `github`,
         message: `Please input the GitHub username of the Engineer:`
     }
 ];
@@ -78,52 +78,49 @@ const questionsEngineer = [
 const questionsIntern = [
     {
         type: `input`,
-        name: `internName`,
+        name: `name`,
         message: `Please input the first and last name of the Intern:`
     },
     {
         type: `input`,
-        name: `internIdNumber`,
+        name: `id`,
         message: `Please input the employee ID number of the Intern:`
     },
     {
         type: `input`,
-        name: `internEmailAddress`,
+        name: `email`,
         message: `Please input the company email address of the Intern:`
     },
     {
         type: `input`,
-        name: `internSchoolName`,
+        name: `school`,
         message: `Please input the name of the school the Intern attends:`
     }
 ];
 
-const init = async () => {
-    addEmployee();
-}
+const employees = [];
 
 const addEmployee = async () => {
     await inquirer
         .prompt(questionsStart)
         .then(async (response) => {
             if (response.employeePosition === `Manager`) {
-                addManager();
+                await addManager();
             } else if (response.employeePosition === `Engineer`) {
-                addEngineer();
+                await addEngineer();
 
             } else if (response.employeePosition === `Intern`) {
-                addIntern();
+                await addIntern();
             };
         });
-   
-};
+}
 
 const addAnother = async () => {
     await inquirer
         .prompt(questionsContinue)
         .then(async (response) => {
             if (response.confirm === true) {
-                addEmployee();
+                await addEmployee();
             };
         });
 };
@@ -132,45 +129,60 @@ const addManager = async () => {
     await inquirer
         .prompt(questionsManager)
         .then(async (response) => {
-            const employeeManager = new Manager(
-                response.managerName,
-                response.managerIdNumber,
-                response.managerEmailAddress,
-                response.managerOfficeNumber
+            const manager = new Manager(
+                response.name,
+                response.id,
+                response.email,
+                response.officeNumber
             );
-            employeeList.push(employeeManager);
+            employees.push(manager);
         });
-    addAnother();
+   await addAnother();
 }
 
 const addEngineer = async () => {
     await inquirer
         .prompt(questionsEngineer)
         .then(async (response) => {
-            const employeeEngineer = new Engineer(
-                response.engineerName,
-                response.engineerIdNumber,
-                response.engineerEmailAddress,
-                response.engineerOfficeNumber
+            const engineer = new Engineer(
+                response.name,
+                response.id,
+                response.email,
+                response.github
             );
-            employeeList.push(employeeEngineer);
+            employees.push(engineer);
         });
-    addAnother();
+    await addAnother();
 };
 
 const addIntern = async () => {
     await inquirer
         .prompt(questionsIntern)
         .then(async (response) => {
-            const employeeIntern = new Intern(
-                response.internName,
-                response.internIdNumber,
-                response.internEmailAddress,
-                response.internOfficeNumber
+            const intern = new Intern(
+                response.name,
+                response.id,
+                response.email,
+                response.school
             );
-            employeeList.push(employeeIntern);
+            employees.push(intern);
         });
-    addAnother();
+    await addAnother();
+};
+const init = async () => {
+    await addEmployee();
+    await createHTML();
 };
 
+const createHTML = async () => {
+    const htmlRender = await render(employees);
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+    fs.writeFile(outputPath, htmlRender, (err) => {
+        if (err) {
+            throw err;
+        };
+    });
+}
 init();
