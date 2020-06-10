@@ -55,3 +55,26 @@ const questionsEngineer = [
         message: 'Please input the GitHub username of the Engineer:'
     }
 ];
+
+const questionsIntern = [
+    {
+        type: 'input',
+        name: 'internName',
+        message: 'Please input the first and last name of the Intern:'
+    },
+    {
+        type: 'input',
+        name: 'internIdNumber',
+        message: 'Please input the employee ID number of the Intern:'
+    },
+    {
+        type: 'input',
+        name: 'internEmailAddress',
+        message: 'Please input the company email address of the Intern:'
+    },
+    {
+        type: 'input',
+        name: 'internSchoolName',
+        message: 'Please input the name of the school the Intern attends:'
+    }
+];
