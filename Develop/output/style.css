@@ -1,0 +1,22 @@
+body{
+    background-color: gainsboro;
+}
+.container-fluid{
+    background-color: gainsboro;
+}
+
+.jumbotron{
+    background-color: royalblue;
+}
+
+.card-header{
+    background-color: skyblue;
+}
+
+.card-title{
+    text-align: center
+}
+
+.employee-card {
+      box-shadow: 0 0 3pt 2pt black;
+}
